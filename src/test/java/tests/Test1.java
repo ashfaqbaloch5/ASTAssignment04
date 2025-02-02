@@ -109,6 +109,21 @@ public class Test1
 
         System.out.println("Booking ID: " + bkid);
     }
+    @Test(priority = 3)
+    public void deleteBookingTest()
+    {
+        RestAssured
+                .given()
+                .baseUri("https://restful-booker.herokuapp.com")
+                .header("Contect-Type","application/json")
+                .header("Cookie","token=" +Token)
 
+                .when()
+                .delete("/booking"+bkid)
+
+                .then()
+                .statusCode(201);
+        System.out.println("Booking Deleted with ID :"+bkid);
+    }
 
 }
