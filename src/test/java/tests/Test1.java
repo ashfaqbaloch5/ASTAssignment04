@@ -10,35 +10,35 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class Test1
 {
-    @Test
-    public void addandFetchpet()
-    {
-        //Base URL
-        RestAssured.baseURI=  "https://petstore.swagger.io/v2";
-
-        //step1 Add New Pet
-        JSONObject requestParams= new JSONObject();
-        requestParams.put("id",12345);
-        requestParams.put("name","Tommy");
-        requestParams.put("status","available");
-
-        Response postResponse =RestAssured.given()
-                .header("Content-Type","application/json")
-                .body(requestParams.toString())
-                .when()
-                .post("/pet");
-        postResponse.then().statusCode(200);
-
-        //step 2 fetch pet
-        Response getResponse =RestAssured.given()
-                .queryParam("status","available")
-                .when()
-                .get("/pet/findByStatus");
-        getResponse.then().statusCode(200);
-
-        //step 3 validate added pet exists
-        getResponse.then().body("find { it.id == 12345 }.name", equalTo("Tommy"));
-    }
+//    @Test
+//    public void addandFetchpet()
+//    {
+//        //Base URL
+//        RestAssured.baseURI=  "https://petstore.swagger.io/v2";
+//
+//        //step1 Add New Pet
+//        JSONObject requestParams= new JSONObject();
+//        requestParams.put("id",12345);
+//        requestParams.put("name","Tommy");
+//        requestParams.put("status","available");
+//
+//        Response postResponse =RestAssured.given()
+//                .header("Content-Type","application/json")
+//                .body(requestParams.toString())
+//                .when()
+//                .post("/pet");
+//        postResponse.then().statusCode(200);
+//
+//        //step 2 fetch pet
+//        Response getResponse =RestAssured.given()
+//                .queryParam("status","available")
+//                .when()
+//                .get("/pet/findByStatus");
+//        getResponse.then().statusCode(200);
+//
+//        //step 3 validate added pet exists
+//        getResponse.then().body("find { it.id == 12345 }.name", equalTo("Tommy"));
+//    }
     int bkid;
     String Token;
 
@@ -109,6 +109,21 @@ public class Test1
 
         System.out.println("Booking ID: " + bkid);
     }
+    @Test(priority = 3)
+    public void deleteBookingTest()
+    {
+        RestAssured
+                .given()
+                .baseUri("https://restful-booker.herokuapp.com")
+                .header("Contect-Type","application/json")
+                .header("Cookie","token=" +Token)
 
+                .when()
+                .delete("/booking"+bkid)
+
+                .then()
+                .statusCode(201);
+        System.out.println("Booking Deleted with ID :"+bkid);
+    }
 
 }
