@@ -94,8 +94,6 @@ public class Test1
         bookingInfo.put("bookingdates", bkdate);
 
         bookingInfo.put("additionalneeds", "Breakfast");
-
-        // Print JSON payload for debugging
         System.out.println("Payload: " + bookingInfo.toString());
 
         int bkid = RestAssured
